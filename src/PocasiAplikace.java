@@ -24,14 +24,11 @@ public class PocasiAplikace extends JFrame {
         searchTextField.setFont(new Font("Dialog",Font.ROMAN_BASELINE,27));
         add(searchTextField);
 
-        JButton searchB = new JButton(loadImage("src/pocasiFoto/search.png"));
-        searchB.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        searchB.setBounds(455   ,25,75,75);
-        add(searchB);
-
-        JLabel weatherImage = new JLabel(loadImage("src/pocasiFoto/cloudy.png"));
-        weatherImage.setBounds(13,125,550,250);
-        add(weatherImage);
+        JLabel temperatureTxt = new JLabel("10 C");
+        temperatureTxt.setBounds(13,350,550,60);
+        temperatureTxt.setFont(new Font("Dialog",Font.ROMAN_BASELINE,52));
+        temperatureTxt.setHorizontalAlignment(SwingConstants.CENTER);
+        add(temperatureTxt);
 
         JLabel whatWeather = new JLabel("cloudy ");
         whatWeather.setBounds(13,400,550,45);
@@ -39,13 +36,20 @@ public class PocasiAplikace extends JFrame {
         whatWeather.setHorizontalAlignment(SwingConstants.CENTER);
         add(whatWeather);
 
-        JLabel temperatureTxt = new JLabel("10 C");
-        temperatureTxt.setBounds(13,350,550,60);
-        temperatureTxt.setFont(new Font("Dialog",Font.ROMAN_BASELINE,52));
-        temperatureTxt.setHorizontalAlignment(SwingConstants.CENTER);
-        add(temperatureTxt);
+        JButton searchB = new JButton(loadIM("src/pocasiFoto/search.png"));
+        searchB.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        searchB.setBounds(455   ,25,75,75);
+        add(searchB);
+
+        JLabel weatherIM = new JLabel(loadIM("src/pocasiFoto/cloudy.png"));
+        weatherIM.setBounds(13,125,550,250);
+        add(weatherIM);
+
+        JLabel humidityIM = new JLabel(loadIM("src/pocasiFoto/humidity.png"));
+        humidityIM.setBounds(50,350,75,75);
+        add(humidityIM);
     }
-    private ImageIcon loadImage(String resourcePath){
+    private ImageIcon loadIM(String resourcePath){
         try {
             BufferedImage image = ImageIO.read(new File(resourcePath));
             return new ImageIcon(image);
