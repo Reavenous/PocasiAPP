@@ -36,6 +36,18 @@ public class PocasiAplikace extends JFrame {
         whatWeather.setHorizontalAlignment(SwingConstants.CENTER);
         add(whatWeather);
 
+        JLabel humidityTxt = new JLabel("100%");
+        humidityTxt.setBounds(62,400,75,75);
+        humidityTxt.setFont(new Font("dialog",Font.BOLD,20));
+        add(humidityTxt);
+
+        JLabel windForceTxt = new JLabel("100 km/h");
+        windForceTxt.setBounds(435,400,200,75);
+        windForceTxt.setFont(new Font("dialog",Font.BOLD, 20));
+        add(windForceTxt);
+
+
+
         JButton searchB = new JButton(loadIM("src/pocasiFoto/search.png"));
         searchB.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         searchB.setBounds(455   ,25,75,75);
@@ -48,6 +60,10 @@ public class PocasiAplikace extends JFrame {
         JLabel humidityIM = new JLabel(loadIM("src/pocasiFoto/humidity.png"));
         humidityIM.setBounds(50,350,75,75);
         add(humidityIM);
+
+        JLabel windForceIM = new JLabel(loadIM("src/pocasiFoto/windspeed.png"));
+        windForceIM.setBounds(435,350,75,75);
+        add(windForceIM);
     }
     private ImageIcon loadIM(String resourcePath){
         try {
