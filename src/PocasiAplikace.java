@@ -36,8 +36,6 @@ public class PocasiAplikace extends JFrame {
         whatWeather.setHorizontalAlignment(SwingConstants.CENTER);
         add(whatWeather);
 
-
-
         JButton searchB = new JButton(loadIM("src/pocasiFoto/search.png"));
         searchB.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         searchB.setBounds(455   ,25,75,75);
@@ -50,35 +48,6 @@ public class PocasiAplikace extends JFrame {
         JLabel humidityIM = new JLabel(loadIM("src/pocasiFoto/humidity.png"));
         humidityIM.setBounds(50,350,75,75);
         add(humidityIM);
-
-        JLabel windForceIM = new JLabel(loadIM("src/pocasiFoto/windspeed.png"));
-        windForceIM.setBounds(435,350,75,75);
-        add(windForceIM);
-
-        JLabel uvIndexIM = new JLabel(loadIM("src/pocasiFoto/search.png"));
-        uvIndexIM.setBounds(60,450,75,75);
-        add(uvIndexIM);
-
-        JLabel pressureIM = new JLabel(loadIM("src/pocasiFoto/search.png"));
-        pressureIM.setBounds(250,450,75,75);
-        add(pressureIM);
-
-        JLabel precipitationIM = new JLabel("src/pocasiFoto/search.png");
-        precipitationIM.setBounds(435,450,75,75);
-        add(precipitationIM);
-
-        JLabel sunriseIM = new JLabel("src/pocasiFoto/search.png");
-        sunriseIM.setBounds(60,550,75,75);
-        add(sunriseIM);
-
-        JLabel sunsetIM = new JLabel("src/pocasiFoto/search.png");
-        sunsetIM.setBounds(250,550,75,75);
-        add(sunsetIM);
-
-        JLabel moonStateIM = new JLabel("src/pocasiFoto/search.png");
-        moonStateIM.setBounds(435,550,75,75);
-        add(moonStateIM);
-
     }
     private ImageIcon loadIM(String resourcePath){
         try {
