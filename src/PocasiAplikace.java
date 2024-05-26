@@ -8,7 +8,15 @@ import java.io.IOException;
 
 public class PocasiAplikace extends JFrame {
 
-   
+    public PocasiAplikace(){
+        super("Počasí");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(600,900);
+        setLocationRelativeTo(null);
+        setLayout(null);
+        setResizable(false);
+        addComponents();
+    }
 
     private void addComponents(){
         JTextField searchTextField = new JTextField();
