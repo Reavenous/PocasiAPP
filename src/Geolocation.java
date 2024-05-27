@@ -7,6 +7,8 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Geolocation {
@@ -29,6 +31,19 @@ public class Geolocation {
             }
             StringBuilder resultJ = new StringBuilder();
             Scanner sc = new Scanner(connection.getInputStream());
+            while(sc.hasNext()){
+                resultJ.append(sc.nextLine());
+            }
+            sc.close();
+            connection.disconnect();
+
+            JSONParser parser = new JSONParser();
+            JSONObject resJOBJ  = (JSONObject) parser.parse(String.valueOf(resultJ));
+
+            JSONObject hourly = (JSONObject) resJOBJ.get("hourly");
+            JSONArray timeH = (JSONArray) hourly.get("time");
+            int index = findCurT(timeH);
+
 
         }catch (Exception e){
             e.printStackTrace();
@@ -80,6 +95,17 @@ public class Geolocation {
 
 
         return null;
+    }
+    private static int findCurT(JSONArray tList){//cobain
+       String curT = getCurT();
+       return 0;
+    }
+    public static String getCurT(){
+       LocalDataTime curDataT = LocalDateTime.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH':00'");
+        String formDateT = curDataT.format(formatter);
+        return formDateT;
     }
 
 }
