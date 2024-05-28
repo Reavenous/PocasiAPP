@@ -2,7 +2,7 @@
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -44,7 +44,29 @@ public class Geolocation {
             JSONArray timeH = (JSONArray) hourly.get("time");
             int index = findCurT(timeH);
 
+            JSONArray tempData = (JSONArray) hourly.get("temperature_2m");
+            double temperature  = (double) tempData.get(index);
 
+            JSONArray weatherCode = (JSONArray)  hourly.get("weathercode");
+            String weatherCond = convertWCode((long)weatherCode.get(index));
+
+            JSONArray humData = (JSONArray) hourly.get("relativehumidity_2m");
+            long relHum = (long) humData.get(index);
+
+            JSONArray pressData = (JSONArray) hourly.get("surface_pressure");
+            long pressure  = (long)pressData.get(index);
+
+            JSONArray windData = (JSONArray) hourly.get("wind_speed_10m");
+            double windspeed = (double) windData.get(index);
+
+            JSONObject wData = new JSONObject();
+            wData.put("temperature",temperature);
+            wData.put("weather_condition",weatherCond);
+            wData.put("humidity",relHum);
+            wData.put("pressure",pressure);
+            wData.put("windspeed",windspeed);
+
+            return wData;
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -98,14 +120,34 @@ public class Geolocation {
     }
     private static int findCurT(JSONArray tList){//cobain
        String curT = getCurT();
+
+       for (int i = 0; i<tList.size();i++){
+           String time = (String) tList.get(i);
+           if (time.equalsIgnoreCase(curT)){
+                return i;
+           }
+       }
        return 0;
     }
     public static String getCurT(){
-       LocalDataTime curDataT = LocalDateTime.now();
+       LocalDateTime curDataT = LocalDateTime.now();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH':00'");
         String formDateT = curDataT.format(formatter);
         return formDateT;
+    }
+    private static String convertWCode(long weatherCode){
+       String weatherCond = "";
+       if (weatherCode ==  0L ){
+           weatherCond = "Clear";
+       } else if (weatherCode <= 3L && weatherCode > 0L) {
+           weatherCond = "Cloudy";
+       } else if ((weatherCode >= 51L && weatherCode <= 67L) || (weatherCode >= 80L && weatherCode <= 99L)) {
+           weatherCond = "Rain";
+       }else if (weatherCode >= 71L && weatherCode <= 77L){
+           weatherCond = "Snow";
+       }
+       return weatherCond;
     }
 
 }
