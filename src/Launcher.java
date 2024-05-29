@@ -6,6 +6,8 @@ public class Launcher {
             @Override
             public void run() {
                 new PocasiAplikace().setVisible(true);
+               // System.out.println(Geolocation.getLocData("Praha"));
+
             }
         });
     }

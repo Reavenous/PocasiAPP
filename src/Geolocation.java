@@ -3,7 +3,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -27,6 +26,7 @@ public class Geolocation {
             HttpURLConnection connection = fetchApiResponse(urlStr);
             if (connection.getResponseCode() != 200){
                 System.out.println("Couldn't connect to api");
+                System.out.println(urlStr);
                 return null;
             }
             StringBuilder resultJ = new StringBuilder();
@@ -47,17 +47,38 @@ public class Geolocation {
             JSONArray tempData = (JSONArray) hourly.get("temperature_2m");
             double temperature  = (double) tempData.get(index);
 
-            JSONArray weatherCode = (JSONArray)  hourly.get("weathercode");
+            JSONArray weatherCode = (JSONArray)  hourly.get("weather_code");
             String weatherCond = convertWCode((long)weatherCode.get(index));
 
-            JSONArray humData = (JSONArray) hourly.get("relativehumidity_2m");
+            JSONArray humData = (JSONArray) hourly.get("relative_humidity_2m");
             long relHum = (long) humData.get(index);
 
             JSONArray pressData = (JSONArray) hourly.get("surface_pressure");
-            long pressure  = (long)pressData.get(index);
+            double pressure  = (double)pressData.get(index);
 
             JSONArray windData = (JSONArray) hourly.get("wind_speed_10m");
             double windspeed = (double) windData.get(index);
+
+
+
+            JSONObject daily = (JSONObject) resJOBJ.get("daily");
+            JSONArray day = (JSONArray) daily.get("time");
+            int indexDay = findDay(day);
+
+            JSONArray uvIData = (JSONArray) daily.get("uv_index_max");
+            double uvIndex = (double) uvIData.get(indexDay);
+
+            JSONArray precipData = (JSONArray) daily.get("precipitation_sum");
+            double precipitation = (double) precipData.get(indexDay);
+
+            JSONArray riseData = (JSONArray) daily.get("sunrise");
+            String sunrise = (String) daily.get(indexDay);
+
+            JSONArray setData = (JSONArray) daily.get("sunset");
+            String sunset = (String) daily.get(indexDay);
+
+
+
 
             JSONObject wData = new JSONObject();
             wData.put("temperature",temperature);
@@ -65,6 +86,11 @@ public class Geolocation {
             wData.put("humidity",relHum);
             wData.put("pressure",pressure);
             wData.put("windspeed",windspeed);
+            wData.put("uvIndex",uvIndex);
+            wData.put("precipitation",precipitation);
+            wData.put("sunrise",sunrise);
+            wData.put("sunset",sunset);
+
 
             return wData;
         }catch (Exception e){
@@ -129,10 +155,28 @@ public class Geolocation {
        }
        return 0;
     }
+    private static int findDay(JSONArray tList){
+        String curD = getDay();
+
+        for (int i = 0; i<tList.size();i++){
+            String time = (String) tList.get(i);
+            if (time.equalsIgnoreCase(curD)){
+                return i;
+            }
+        }
+        return 0;
+    }
     public static String getCurT(){
        LocalDateTime curDataT = LocalDateTime.now();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH':00'");
+        String formDateT = curDataT.format(formatter);
+        return formDateT;
+    }
+    public static String getDay(){
+        LocalDateTime curDataT = LocalDateTime.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formDateT = curDataT.format(formatter);
         return formDateT;
     }
