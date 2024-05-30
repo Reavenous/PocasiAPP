@@ -14,6 +14,12 @@ public class PocasiAplikace extends JFrame {
 
     private JSONObject wData;
 
+    /**
+     * Constructor for the PocasiAplikace class.
+     * Initializes the application window with the title "Počasí", sets its size to 600x900 pixels,
+     * centers it on the screen, sets the layout to null, disables resizing, and adds components to the window.
+     */
+
     public PocasiAplikace(){
         super("Počasí");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -24,55 +30,60 @@ public class PocasiAplikace extends JFrame {
         addComponents();
     }
 
+    /**
+     * Adds components such as text fields, labels, images, and buttons to the application window.
+     * Handles button click events to fetch weather data based on user input and update UI accordingly.
+     */
+
     private void addComponents(){
         JTextField searchTextField = new JTextField();
         searchTextField.setBounds(50,25,400,75);
         searchTextField.setFont(new Font("Dialog",Font.BOLD,27));
         add(searchTextField);
 
-        JLabel temperatureTxt = new JLabel("10 C");
+        JLabel temperatureTxt = new JLabel("");
         temperatureTxt.setBounds(13,350,550,60);
         temperatureTxt.setFont(new Font("Dialog",Font.BOLD,52));
         temperatureTxt.setHorizontalAlignment(SwingConstants.CENTER);
         add(temperatureTxt);
 
-        JLabel whatWeather = new JLabel("cloudy ");
+        JLabel whatWeather = new JLabel("");
         whatWeather.setBounds(13,410,553,48);
         whatWeather.setFont(new Font("Dialog",Font.BOLD,42));
         whatWeather.setHorizontalAlignment(SwingConstants.CENTER);
         add(whatWeather);
 
-        JLabel humidityTxt = new JLabel("10%");
+        JLabel humidityTxt = new JLabel("");
         humidityTxt.setBounds(60,400,150,75);
         humidityTxt.setFont(new Font("dialog",Font.BOLD,20));
         add(humidityTxt);
 
-        JLabel windForceTxt = new JLabel("10 km/h");
+        JLabel windForceTxt = new JLabel("");
         windForceTxt.setBounds(435,400,150,75);
         windForceTxt.setFont(new Font("dialog",Font.BOLD,20));
         add(windForceTxt);
 
-        JLabel uvIndexTxt = new JLabel("1000");
+        JLabel uvIndexTxt = new JLabel("");
         uvIndexTxt.setBounds(60,550,150,75);
         uvIndexTxt.setFont(new Font("dialog",Font.BOLD,20));
         add(uvIndexTxt);
 
-        JLabel pressureTxt = new JLabel("2500ph");
+        JLabel pressureTxt = new JLabel("");
         pressureTxt.setBounds(250,550,150,75);
         pressureTxt.setFont(new Font("dialog",Font.BOLD,20));
         add(pressureTxt);
 
-        JLabel precipitationTxt = new JLabel("10mm");
+        JLabel precipitationTxt = new JLabel("");
         precipitationTxt.setBounds(435,550,150,75);
         precipitationTxt.setFont(new Font("dialog", Font.BOLD,20));
         add(precipitationTxt);
 
-        JLabel sunriseTxt = new JLabel("06:99");
+        JLabel sunriseTxt = new JLabel("");
         sunriseTxt.setBounds(60,675,150,75);
         sunriseTxt.setFont(new Font("dialog",Font.BOLD,20));
         add(sunriseTxt);
 
-        JLabel sunsetTxt = new JLabel("21:99");
+        JLabel sunsetTxt = new JLabel("");
         sunsetTxt.setBounds(435,675,150,75);
         sunsetTxt.setFont(new Font("dialog",Font.BOLD,20));
         add(sunsetTxt);
@@ -177,6 +188,13 @@ public class PocasiAplikace extends JFrame {
         add(searchB);
 
     }
+
+    /**
+     * Loads an image from the specified file path and returns it as an ImageIcon.
+     *
+     * @param resourcePath the file path of the image to load
+     * @return an ImageIcon object representing the loaded image, or null if the image cannot be loaded
+     */
     private ImageIcon loadIM(String resourcePath){
         try {
             BufferedImage image = ImageIO.read(new File(resourcePath));

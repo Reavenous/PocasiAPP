@@ -12,6 +12,15 @@ import java.util.Scanner;
 
 public class Geolocation {
 
+    /**
+     * Retrieves weather data for a given location.
+     *
+     * @param locName the name of the location to get weather data for
+     * @return a JSONObject containing weather data such as temperature, weather condition,
+     *         humidity, pressure, windspeed, UV index, precipitation, sunrise, and sunset times.
+     *         Returns null if unable to fetch data.
+     * @throws IllegalArgumentException if the location data cannot be retrieved or parsed
+     */
    public static JSONObject getWData(String locName){
         JSONArray locData = getLocData(locName);
 
@@ -72,10 +81,13 @@ public class Geolocation {
             double precipitation = (double) precipData.get(indexDay);
 
             JSONArray riseData = (JSONArray) daily.get("sunrise");
-            String sunrise = (String) daily.get(indexDay);
+            String sunrise = (String) riseData.get(indexDay);
+            sunrise = sunrise.substring(11);
+
 
             JSONArray setData = (JSONArray) daily.get("sunset");
-            String sunset = (String) daily.get(indexDay);
+            String sunset = (String) setData.get(indexDay);
+            sunset = sunset.substring(11);
 
 
 
@@ -98,6 +110,17 @@ public class Geolocation {
         }
         return null;
     }
+
+
+
+    /**
+     * Retrieves location data for a given location name using the Open-Meteo Geocoding API.
+     *
+     * @param locName the name of the location to get geocoding data for
+     * @return a JSONArray containing location data such as latitude and longitude.
+     *         Returns null if unable to fetch data.
+     * @throws IllegalArgumentException if the location data cannot be retrieved or parsed
+     */
     public static JSONArray getLocData(String locName){
         locName = locName.replaceAll(" ","+");
         String urlS = "https://geocoding-api.open-meteo.com/v1/search?name=" +
@@ -128,6 +151,15 @@ public class Geolocation {
         }
         return null;
    }
+
+
+    /**
+     * Establishes an HTTP connection to the given URL and returns the HttpURLConnection object.
+     *
+     * @param urlS the URL string to connect to
+     * @return the HttpURLConnection object for the specified URL
+     * @throws IOException if an I/O exception occurs
+     */
     private static HttpURLConnection fetchApiResponse(String urlS){
        try {
            URL url = new URL(urlS);
@@ -144,6 +176,13 @@ public class Geolocation {
 
         return null;
     }
+
+    /**
+     * Finds the index of the current time in the given JSON array of times.
+     *
+     * @param tList a JSONArray containing time strings
+     * @return the index of the current time in the given array, or 0 if the current time is not found
+     */
     private static int findCurT(JSONArray tList){//cobain
        String curT = getCurT();
 
@@ -166,6 +205,13 @@ public class Geolocation {
         }
         return 0;
     }
+
+    /**
+     * Retrieves the current date and time formatted as a string.
+     * The format used is "yyyy-MM-dd'T'HH':00'".
+     *
+     * @return the current date and time formatted as a string
+     */
     public static String getCurT(){
        LocalDateTime curDataT = LocalDateTime.now();
 
@@ -180,6 +226,13 @@ public class Geolocation {
         String formDateT = curDataT.format(formatter);
         return formDateT;
     }
+
+    /**
+     * Converts a weather code to a human-readable weather condition.
+     *
+     * @param weatherCode the weather code to convert
+     * @return a string representing the weather condition (e.g., "Clear", "Cloudy", "Rain", "Snow")
+     */
     private static String convertWCode(long weatherCode){
        String weatherCond = "";
        if (weatherCode ==  0L ){
