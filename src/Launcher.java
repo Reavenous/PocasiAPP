@@ -11,7 +11,7 @@ public class Launcher {
 
         {
             SwingUtilities.invokeLater(() -> {
-                JFrame frame = new JFrame("Weather Forecast");
+                JFrame frame = new JFrame("Weekly Weather Forecast");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(400, 600);
                 frame.setLayout(new BorderLayout());

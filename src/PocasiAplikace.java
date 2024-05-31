@@ -21,7 +21,7 @@ public class PocasiAplikace extends JFrame {
      */
 
     public PocasiAplikace(){
-        super("Počasí");
+        super("Daily Weather Forecast");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600,900);
         setLocationRelativeTo(null);
